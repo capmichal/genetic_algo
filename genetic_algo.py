@@ -5,8 +5,18 @@ from difflib import SequenceMatcher
 TARGET = "poprawne" # target has to have a fixed legth and we have to stick with it, for now we keep it as a string without spaces, all lowercase
 TARGET_LEN = len(TARGET)
 GENES = string.ascii_lowercase
-MUTATION_RATE = 0.2 # how likely is the mutation
+MUTATION_RATE = 0.5 # how likely is the mutation
 
+
+# find out how good is given generation as a whole (fitness score)
+def generational_fitness_score(generation):
+    
+    # should we take avg, or sum? --> stick with avg for now
+    combined_score = 0
+    for element in generation:
+        combined_score += SequenceMatcher(None, element, TARGET).ratio()
+
+    return combined_score//len(generation)
 
 
 
@@ -95,6 +105,7 @@ population = ["".join(random.choices(GENES, k=TARGET_LEN)) for i in range(50)]
 for i in range(1000):
 
     best_genes = find_best_from_generation(population)
+    og_generation_fitness = generational_fitness_score(population)
     
     if best_genes == "MAMY WINNERA":
         print(best_genes)
@@ -103,7 +114,14 @@ for i in range(1000):
         print(f"najlepsze geny populacji nr. {i} --> {best_genes}")
 
     new_generation = crossover(best_genes)
-    print(f"nowa generacja wywodząca się od populacji nr. {i} --> {new_generation}")
-    population = new_generation
+    new_generation_fitness = generational_fitness_score(new_generation)
+
+    # check if new generation is worth "evolving to"
+    if new_generation_fitness >= og_generation_fitness:
+        print("EVOLVING...........")
+        print(f"nowa generacja wywodząca się od populacji nr. {i} --> {new_generation}")
+        population = new_generation
+    else:
+        print("NEW GENERATION IS NOT WORTH EVOLVING..............")
 
 print("KONIEC")
