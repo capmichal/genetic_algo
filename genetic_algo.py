@@ -32,7 +32,7 @@ def find_best_from_generation(generation):
     if best_one == 0:
         return "MAMY WINNERA"
     else:
-        print(f"Najlepszy hamming distance tej generacji to {best_one}")
+        print(f"Najlepszy Levenshtein distance tej generacji to {best_one}")
 
     return best_half
 
