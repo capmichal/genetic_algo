@@ -63,8 +63,9 @@ def crossover(potential_parents):
     while len(new_generation) < desired_generation_size:
         # dla KAZDEGO z dobych genowo rodziców wykonuje
         # Roulette Wheel selection, the "best" parent has the most opportunities to reproduce
-        for parent in potential_parents:
-            potential_parents_excluded = [i for i in potential_parents if i != parent]
+        for i in range(len(potential_parents)):
+            parent = potential_parents[i]
+            potential_parents_excluded = potential_parents[:i] + potential_parents[i+1:]
             
             if len(new_generation) != desired_generation_size:
                 parent1 = parent
@@ -93,7 +94,7 @@ def crossover(potential_parents):
 
 
 
-population = ["".join(random.choices(GENES, k=TARGET_LEN)) for i in range(50)]
+population = ["".join(random.choices(GENES, k=TARGET_LEN)) for i in range(10)]
 
 
 
