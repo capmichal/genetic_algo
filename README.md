@@ -16,6 +16,7 @@ Genetic Algorithm is a **5 step** algorithm which simulates the process of evolu
 - find out how to properly set parameters like POPULATION_SIZE, MUTATION_RATE, HOW_MANY_OFFSPRING_PER_PARENT, NUMBER_OF_NEW_GENERATIONS(this should be just a while true loop)
 - maybe a SequenceMatcher is not the best algo, ratio() is probably not a good choice, maybe we should look for how many letters are not correct?
 - there is NEVER a situation when og_gen is better than the new one, shouldnt it happen from time to time?
+**- nadal przzy population_size=10 występuje ten problem, że w pewnym momencie 5 najlepszych parentów to jest to samo, więc po "excludzie" zostajemy z pustą listą** --> może wystarczy nie exludować parenta, czyli kazdego wystąpienia, tylko tego jednego konkretnego indeksu? 
 
 
 
