@@ -61,6 +61,7 @@ def crossover(potential_parents):
 
     while len(new_generation) < desired_generation_size:
         # dla KAZDEGO z dobych genowo rodziców wykonuje
+        # Roulette Wheel selection, the "best" parent has the most opportunities to reproduce
         for parent in potential_parents:
             potential_parents_excluded = [i for i in potential_parents if i != parent]
             
@@ -93,12 +94,7 @@ def crossover(potential_parents):
 
 population = ["".join(random.choices(GENES, k=TARGET_LEN)) for i in range(50)]
 
-# fajni = find_best_from_generation(population)
-# print("fajni", fajni)
 
-
-# nowi_fajni = crossover(fajni)
-# print("nowi fajni", nowi_fajni)
 
 
 
@@ -121,7 +117,7 @@ for i in range(1000):
         print("EVOLVING...........")
         print(f"nowa generacja wywodząca się od populacji nr. {i} --> {new_generation}")
         population = new_generation
-    else:
+    else: # NEVER happens for some reason
         print("NEW GENERATION IS NOT WORTH EVOLVING..............")
 
 print("KONIEC")
