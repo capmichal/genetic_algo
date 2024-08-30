@@ -1,6 +1,7 @@
 import random
 import string
 from difflib import SequenceMatcher
+import Levenshtein
 
 TARGET = "poprawne" # target has to have a fixed legth and we have to stick with it, for now we keep it as a string without spaces, all lowercase
 TARGET_LEN = len(TARGET)
@@ -14,7 +15,7 @@ def generational_fitness_score(generation):
     # should we take avg, or sum? --> stick with avg for now
     combined_score = 0
     for element in generation:
-        combined_score += SequenceMatcher(None, element, TARGET).ratio()
+        combined_score += Levenshtein.distance(element, TARGET)
 
     return combined_score//len(generation)
 
@@ -23,15 +24,15 @@ def generational_fitness_score(generation):
 # SELECTION STAGE - find out best half of elements from population 
 def find_best_from_generation(generation):
 
-    best_half = sorted(generation, key=lambda string: SequenceMatcher(None, string, TARGET).ratio(), reverse=True)[:int(0.5*len(generation))]
-    best_one = SequenceMatcher(None, best_half[0], TARGET).ratio()
+    best_half = sorted(generation, key=lambda string: Levenshtein.distance(string, TARGET), reverse=False)[:int(0.5*len(generation))]
+    best_one = Levenshtein.distance(best_half[0], TARGET)
 
 
 
-    if best_one == 1.0:
+    if best_one == 0:
         return "MAMY WINNERA"
     else:
-        print(f"Najlepsze ratio tej generacji to {best_one}")
+        print(f"Najlepszy hamming distance tej generacji to {best_one}")
 
     return best_half
 
@@ -113,7 +114,7 @@ for i in range(1000):
     new_generation_fitness = generational_fitness_score(new_generation)
 
     # check if new generation is worth "evolving to"
-    if new_generation_fitness >= og_generation_fitness:
+    if new_generation_fitness <= og_generation_fitness:
         print("EVOLVING...........")
         print(f"nowa generacja wywodząca się od populacji nr. {i} --> {new_generation}")
         population = new_generation

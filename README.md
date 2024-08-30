@@ -17,3 +17,11 @@ Genetic Algorithm is a **5 step** algorithm which simulates the process of evolu
 - maybe a SequenceMatcher is not the best algo, ratio() is probably not a good choice, maybe we should look for how many letters are not correct?
 - there is NEVER a situation when og_gen is better than the new one, shouldnt it happen from time to time?
 
+
+
+
+takeway:
+while using difflib SequenceMatcher, with MUTATION_RATE=0.5, generation_len=50, off_per_parent=(1,3), sometimes even
+1000 iterations were not enough
+using RATIO to measure how close we are, is really not effective, we should definitely use hamming distance, meaning
+we should look how many letters we got wrong
